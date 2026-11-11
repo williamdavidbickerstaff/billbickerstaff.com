@@ -1,0 +1,443 @@
+html {
+	font-size: 16px;
+	overflow-y: scroll;
+	-webkit-text-size-adjust: 100%;
+	-ms-text-size-adjust: 100%;
+}
+
+@font-face {
+	font-family: 'BeowolfOT-R24';
+	src: url('/fonts/BeowolfOT-R24.woff2') format('woff2'),
+		url('/fonts/BeowolfOT-R24.woff') format('woff');
+	font-weight: normal;
+	font-style: normal;
+	font-display: swap;
+}
+
+td {
+	position: relative;
+	vertical-align: top;
+	text-align: left;
+	border-left: 1px solid;
+	padding-left: 12px;
+	padding-right: 12px;
+}
+
+a {
+	color: #4e1e86;
+}
+
+a:hover {
+	color: blue;
+}
+
+.details {
+	margin-left: 12px;
+}
+
+.details_title {
+	text-decoration: underline;
+	cursor: zoom-in;
+}
+
+.details_content {
+	color: black;
+}
+
+img {
+	width: 100%;
+	height: auto;
+}
+
+body {
+	margin: 1rem;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	color: #111;
+	line-height: 125%;
+	font-weight: normal;
+}
+
+h4,
+h5,
+h6 {
+	font-weight: bold;
+}
+
+/* ==========================================================================
+   Page layout — flexbox column, three regions: header / content / footer.
+   Nothing here uses position: fixed. The header and footer stay in view
+   while scrolling via position: sticky instead, which (unlike fixed) still
+   participates in normal flex flow and layout order.
+   ========================================================================== */
+
+.layout {
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
+}
+
+/* ---- Header: title (left) + short blurb (right) ---- */
+
+.site-header {
+	position: sticky;
+	top: 0;
+	z-index: 3;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: flex-start;
+	gap: 1rem;
+	padding: 1rem 1rem 0.5rem;
+	margin: -1rem -1rem 0;
+	background: #fff;
+}
+
+.title-link {
+	text-decoration: none;
+}
+
+.title {
+	font-family: 'BeowolfOT-R24';
+	font-weight: normal;
+	font-style: normal;
+	font-size: 1.5rem;
+	color: black;
+	margin: 0;
+}
+
+.title:hover {
+	color: blue;
+}
+
+.rightAlign {
+	line-height: 1.2;
+	width: 12em;
+	margin: 0;
+	flex: 0 0 auto;
+}
+
+.rightAlign p {
+	text-align: right;
+	margin: 0;
+}
+
+/* ---- Main content: centred column ---- */
+
+.content {
+	flex: 1 0 auto;
+	width: 42em;
+	max-width: 100%;
+	margin: 0 auto;
+	padding: 1rem 0 22em;
+	/* bottom padding keeps content clear of the sticky footer below */
+}
+
+/* ---- Footer: artist statement, then portrait + gallery strip ----
+   These used to be aligned to the content column's left edge via
+   `margin-left: calc(50% - 21em)` on a position:fixed box. Same calc,
+   now expressed as a flex-basis on a spacer item inside a flex row. */
+
+.footer-row {
+	position: sticky;
+	bottom: 0;
+	z-index: 2;
+	display: flex;
+	flex-direction: row;
+	align-items: flex-end;
+	background: #fff;
+}
+
+.footer-row--statement {
+	bottom: 16em;
+	padding: 0.5rem 1rem 0;
+}
+
+.footer-row--image {
+	bottom: 0;
+	padding: 0 1rem 1rem;
+	gap: 1rem;
+}
+
+.statement-spacer {
+	flex: 0 0 calc(50% - 22em);
+}
+
+.gallery-spacer {
+	flex: 0 0 calc(50% - 21em - 1rem);
+}
+
+.artist-statement {
+	flex: 1 1 auto;
+	max-width: calc(42em - 1rem);
+}
+
+.artist-statement p {
+	margin: 0 0 0.5rem;
+}
+
+.about_portrait {
+	flex: 0 0 auto;
+	width: auto;
+	height: 15em;
+}
+
+.about_gallery {
+	display: flex;
+	align-items: flex-start;
+	gap: 0.5em;
+	overflow-x: auto;
+	overflow-y: visible;
+	flex: 1 1 auto;
+	min-width: 0;
+	scroll-snap-type: x mandatory;
+	scrollbar-width: none;
+	/* Firefox */
+	-ms-overflow-style: none;
+	/* Internet Explorer */
+	-webkit-overflow-scrolling: touch;
+}
+
+.about_gallery::-webkit-scrollbar {
+	display: none;
+	/* Chrome, Safari, Edge */
+}
+
+.about_gallery figure {
+	flex: 0 0 auto;
+	width: auto;
+	margin: 0;
+	scroll-snap-align: start;
+}
+
+.about_gallery figcaption {
+	margin: 0 0 0.25rem;
+	font-size: 1rem;
+	text-align: left;
+}
+
+.about_gallery figure img {
+	display: block;
+	width: auto;
+	height: 15em;
+	border: 1px dotted;
+	box-sizing: border-box;
+}
+
+#book {
+	width: 100%;
+	margin: 2rem auto;
+}
+
+#book .page {
+	background: white;
+	overflow: hidden;
+}
+
+#book .page img {
+	display: block;
+	width: 100%;
+	height: 100%;
+	object-fit: contain;
+}
+
+.image-switcher {
+	width: 100%;
+}
+
+.image-switcher .hero-image {
+	display: block;
+	width: 100%;
+	height: auto;
+	cursor: default;
+}
+
+.image-thumbnails {
+	display: flex;
+	gap: 1em;
+	margin-top: 1em;
+	overflow-x: auto;
+	scrollbar-width: none;
+}
+
+.image-thumbnails::-webkit-scrollbar {
+	display: none;
+}
+
+.image-thumbnails img {
+	flex: 0 0 8em;
+	width: 8em;
+	height: auto;
+	cursor: pointer;
+}
+
+.wiki-embed {
+	display: block;
+	position: relative;
+	left: calc(21em - 33vw);
+	width: min(120vh, calc(100vw - 2rem));
+	height: 80vh;
+	margin: 2rem 0 0;
+	outline: 1px dotted;
+	outline-offset: 1em;
+}
+
+.sculpture {
+	position: fixed;
+	left: 50%;
+	top: 10%;
+	width: 8em;
+}
+
+@media (max-width: 760px) {
+	* {
+
+		/* ...existing code... */
+		.layout {
+			position: relative;
+		}
+
+		/* Floats over the layout without reserving space in document flow. */
+		.sculpture {
+			position: absolute;
+			top: 5.4rem;
+			left: 60.5%;
+			width: clamp(12rem, 20vw, 17rem);
+			z-index: 1;
+		}
+
+		.sculpture img {
+			display: block;
+			width: 100%;
+			height: auto;
+		}
+
+		/* Avoid overlap on narrow screens. */
+		@media (max-width: 760px) {
+			.sculpture {
+				display: none;
+			}
+		}
+
+		/* ...existing code... */
+		box-sizing: border-box;
+	}
+
+	html,
+	body {
+		overflow-x: hidden;
+	}
+
+	body {
+		margin: 0.75rem;
+	}
+
+	/* Drop the sticky/pinned behaviour entirely on small screens and
+	   reorder everything into one simple stacked column, using flex
+	   `order` instead of re-parenting anything in markup. */
+
+	.layout {
+		display: flex;
+		flex-direction: column;
+	}
+
+	.site-header {
+		position: static;
+		flex-direction: column;
+		gap: 0;
+		padding: 0;
+		margin: 0 0 1rem;
+		order: 1;
+	}
+
+	.rightAlign {
+		order: -1;
+		width: 100%;
+		margin: 0 0 1rem;
+	}
+
+	.rightAlign p {
+		text-align: left;
+	}
+
+	.title {
+		font-size: 1.2rem;
+		line-height: 1.2;
+	}
+
+	.footer-row--image {
+		order: 2;
+		position: static;
+		flex-direction: column;
+		align-items: flex-start;
+		padding: 0;
+		margin: 0 0 1rem;
+		background: none;
+	}
+
+	.gallery-spacer {
+		display: none;
+	}
+
+	.about_portrait {
+		height: 10rem;
+		margin-bottom: 0.5rem;
+	}
+
+	.about_gallery {
+		width: 100%;
+	}
+
+	.about_gallery figure img {
+		height: 11rem;
+	}
+
+	.content {
+		order: 3;
+		width: 100%;
+		max-width: 100%;
+		margin: 0;
+		padding: 0 0 1rem;
+	}
+
+	.footer-row--statement {
+		order: 4;
+		position: static;
+		padding: 0;
+		margin: 0 0 1rem;
+		background: none;
+	}
+
+	.statement-spacer {
+		display: none;
+	}
+
+	.artist-statement {
+		max-width: 100%;
+	}
+
+	#book,
+	.image-switcher,
+	.wiki-embed {
+		width: 100%;
+		max-width: 100%;
+	}
+
+	.wiki-embed {
+		left: 0;
+		height: auto;
+		min-height: 50vh;
+		margin-top: 1rem;
+	}
+
+	.image-thumbnails img {
+		flex-basis: 6rem;
+		width: 6rem;
+	}
+}

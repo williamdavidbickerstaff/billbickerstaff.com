@@ -1,0 +1,397 @@
+html {
+	font-size: 16px;
+	overflow-y: scroll;
+	-webkit-text-size-adjust: 100%;
+	-ms-text-size-adjust: 100%;
+}
+
+@font-face {
+	font-family: 'BeowolfOT-R24';
+	src: url('/fonts/BeowolfOT-R24.woff2') format('woff2'),
+		url('/fonts/BeowolfOT-R24.woff') format('woff');
+	font-weight: normal;
+	font-style: normal;
+	font-display: swap;
+}
+
+td {
+	position: relative;
+	vertical-align: top;
+	text-align: left;
+	border-left: 1px solid;
+	padding-left: 12px;
+	padding-right: 12px;
+}
+
+a {
+	color: #4e1e86;
+}
+
+a:hover {
+	color: blue;
+}
+
+.details {
+	margin-left: 12px;
+}
+
+.details_title {
+	text-decoration: underline;
+	cursor: zoom-in;
+}
+
+.details_content {
+	color: black;
+}
+
+img {
+	width: 100%;
+	height: auto;
+}
+
+body {
+	margin: 1rem;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	color: #111;
+	line-height: 125%;
+	font-weight: normal;
+}
+
+h4,
+h5,
+h6 {
+	font-weight: bold;
+}
+
+/* ==========================================================================
+   Page layout — three-column grid
+
+   Desktop structure:
+
+   | left column | 42em content | right column |
+
+   The middle column is the same width as the old `.content`, while the two
+   outer columns absorb the remaining viewport space. This keeps the visual
+   alignment of the existing site without using fixed positioning or manual
+   `calc()` offsets.
+   ========================================================================== */
+
+.layout {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) 42em minmax(0, 1fr);
+	grid-template-rows: auto minmax(0, 1fr) auto auto;
+	min-height: calc(100vh - 2rem);
+	column-gap: 0;
+}
+
+/* Header occupies all three columns, but its children snap to the same
+   three-column grid as the rest of the page. */
+.site-header {
+	grid-column: 1 / -1;
+	display: grid;
+	grid-template-columns: subgrid;
+	align-items: start;
+	padding: 0;
+	margin: 0;
+}
+
+.title-link {
+	grid-column: 1;
+	text-decoration: none;
+}
+
+.title {
+	font-family: 'BeowolfOT-R24';
+	font-weight: normal;
+	font-style: normal;
+	font-size: 1.5rem;
+	color: black;
+	margin: 0;
+}
+
+.title:hover {
+	color: blue;
+}
+
+.rightAlign {
+	grid-column: 3;
+	justify-self: end;
+	line-height: 1.2;
+	width: 12em;
+	margin: 0;
+}
+
+.rightAlign p {
+	text-align: right;
+	margin: 0;
+}
+
+/* Main content sits entirely in the fixed-width middle column. */
+.content {
+	grid-column: 2;
+	grid-row: 2;
+	width: 42em;
+	max-width: 100%;
+	margin: 0;
+	align-self: start;
+	padding: 1rem 0 0;
+}
+
+/* Statement sits above the image row and starts on the exact same vertical
+   grid line as the main content. It is allowed to extend into the right
+   column, as in the current design. */
+.footer-row {
+	display: grid;
+	grid-template-columns: subgrid;
+	grid-column: 1 / -1;
+}
+
+.footer-row--statement {
+	grid-row: 3;
+	align-items: end;
+	padding: 0 0 0.5rem;
+}
+
+.artist-statement {
+	grid-column: 2 / -1;
+	max-width: none;
+}
+
+.artist-statement p {
+	margin: 0 0 0.5rem;
+}
+
+/* Image row: portrait stays in the left column, gallery begins exactly at
+   the middle column, with no spacer or fixed positioning needed. */
+.footer-row--image {
+	grid-row: 4;
+	align-items: end;
+	padding: 0 0 1rem;
+}
+
+.about_portrait {
+	grid-column: 1;
+	justify-self: start;
+	width: auto;
+	height: 15em;
+}
+
+.about_gallery {
+	grid-column: 2 / -1;
+	display: flex;
+	align-items: flex-start;
+	gap: 0.5em;
+	overflow-x: auto;
+	overflow-y: visible;
+	min-width: 0;
+	scroll-snap-type: x mandatory;
+	scrollbar-width: none;
+	-ms-overflow-style: none;
+	-webkit-overflow-scrolling: touch;
+}
+
+.about_gallery::-webkit-scrollbar {
+	display: none;
+}
+
+.about_gallery figure {
+	flex: 0 0 auto;
+	width: auto;
+	margin: 0;
+	scroll-snap-align: start;
+}
+
+.about_gallery figcaption {
+	margin: 0 0 0.25rem;
+	font-size: 1rem;
+	text-align: left;
+}
+
+.about_gallery figure img {
+	display: block;
+	width: auto;
+	height: 15em;
+	border: 1px dotted;
+	box-sizing: border-box;
+}
+
+/* These spacer elements existed only to simulate the old fixed layout. */
+.statement-spacer,
+.gallery-spacer {
+	display: none;
+}
+
+#book {
+	width: 100%;
+	margin: 2rem auto;
+}
+
+#book .page {
+	background: white;
+	overflow: hidden;
+}
+
+#book .page img {
+	display: block;
+	width: 100%;
+	height: 100%;
+	object-fit: contain;
+}
+
+.image-switcher {
+	width: 100%;
+}
+
+.image-switcher .hero-image {
+	display: block;
+	width: 100%;
+	height: auto;
+	cursor: default;
+}
+
+.image-thumbnails {
+	display: flex;
+	gap: 1em;
+	margin-top: 1em;
+	overflow-x: auto;
+	scrollbar-width: none;
+}
+
+.image-thumbnails::-webkit-scrollbar {
+	display: none;
+}
+
+.image-thumbnails img {
+	flex: 0 0 8em;
+	width: 8em;
+	height: auto;
+	cursor: pointer;
+}
+
+.wiki-embed {
+	display: block;
+	position: relative;
+	left: calc(21em - 33vw);
+	width: min(120vh, calc(100vw - 2rem));
+	height: 80vh;
+	margin: 2rem 0 0;
+	outline: 1px dotted;
+	outline-offset: 1em;
+}
+
+@media (max-width: 760px) {
+	* {
+		box-sizing: border-box;
+	}
+
+	html,
+	body {
+		overflow-x: hidden;
+	}
+
+	body {
+		margin: 0.75rem;
+	}
+
+	.layout {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr);
+		grid-template-rows: auto auto auto auto;
+		min-height: auto;
+	}
+
+	.site-header {
+		grid-column: 1;
+		grid-row: 1;
+		display: flex;
+		flex-direction: column;
+		gap: 0;
+		margin: 0 0 1rem;
+	}
+
+	.rightAlign {
+		order: -1;
+		width: 100%;
+		margin: 0 0 1rem;
+	}
+
+	.rightAlign p {
+		text-align: left;
+	}
+
+	.title {
+		font-size: 1.2rem;
+		line-height: 1.2;
+	}
+
+	.content {
+		grid-column: 1;
+		grid-row: 2;
+		width: 100%;
+		max-width: 100%;
+		margin: 0;
+		padding: 0 0 1rem;
+	}
+
+	.footer-row--statement {
+		grid-column: 1;
+		grid-row: 3;
+		display: block;
+		padding: 0;
+		margin: 0 0 1rem;
+	}
+
+	.artist-statement {
+		max-width: 100%;
+	}
+
+	.footer-row--image {
+		grid-column: 1;
+		grid-row: 4;
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		padding: 0;
+		margin: 0 0 1rem;
+	}
+
+	.about_portrait {
+		height: 10rem;
+		margin-bottom: 0.5rem;
+	}
+
+	.about_gallery {
+		width: 100%;
+		grid-column: auto;
+	}
+
+	.about_gallery figure img {
+		height: 11rem;
+	}
+
+	#book,
+	.image-switcher,
+	.wiki-embed {
+		width: 100%;
+		max-width: 100%;
+	}
+
+	.wiki-embed {
+		left: 0;
+		height: auto;
+		min-height: 50vh;
+		margin-top: 1rem;
+	}
+
+	.image-thumbnails img {
+		flex-basis: 6rem;
+		width: 6rem;
+	}
+}

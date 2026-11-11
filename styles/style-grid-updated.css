@@ -1,0 +1,631 @@
+html {
+	font-size: 16px;
+	overflow-y: scroll;
+	-webkit-text-size-adjust: 100%;
+	-ms-text-size-adjust: 100%;
+}
+
+@font-face {
+	font-family: 'BeowolfOT-R24';
+	src: url('/fonts/BeowolfOT-R24.woff2') format('woff2'),
+		url('/fonts/BeowolfOT-R24.woff') format('woff');
+	font-weight: normal;
+	font-style: normal;
+	font-display: swap;
+}
+
+td {
+	position: relative;
+	vertical-align: top;
+	text-align: left;
+	border-left: 1px solid;
+	padding-left: 12px;
+	padding-right: 12px;
+}
+
+a {
+	color: #4e1e86;
+}
+
+a:hover {
+	color: blue;
+}
+
+.details {
+	margin-left: 12px;
+}
+
+.details_title {
+	text-decoration: underline;
+	cursor: zoom-in;
+}
+
+.details_content {
+	color: black;
+}
+
+img {
+	width: 100%;
+	height: auto;
+}
+
+body {
+	margin: 1rem;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	color: #111;
+	line-height: 125%;
+	font-weight: normal;
+}
+
+h4,
+h5,
+h6 {
+	font-weight: bold;
+}
+
+/* ======================================================================
+   Desktop layout
+
+   Four columns:
+
+   | about | flexible whitespace | content | right |
+
+   The whitespace column is deliberately calculated from the available
+   width, so it is the first thing to disappear as the viewport narrows.
+   Once that whitespace reaches zero, the about and content columns are
+   allowed to shrink according to their minimum sizes.
+
+   The `.about` block spans the whole grid and uses the same columns again
+   via subgrid. This lets the title, portrait and gallery line up without
+   spacer elements or calculated offsets.
+   ====================================================================== */
+
+.layout {
+	display: grid;
+	grid-template-columns: clamp(14em, calc(100% - 54em), 27em) minmax(0, 1fr) minmax(0, 58em) 12em;
+	grid-template-rows: auto minmax(0, 1fr) auto auto;
+	min-height: calc(100vh - 2rem);
+}
+
+/* ----------------------------------------------------------------------
+   About block
+   ---------------------------------------------------------------------- */
+
+.about {
+	display: contents;
+}
+
+.about>a {
+	grid-column: 1;
+	grid-row: 1;
+	align-self: start;
+}
+
+.title {
+	font-family: 'BeowolfOT-R24';
+	font-weight: normal;
+	font-style: normal;
+	font-size: 1.5rem;
+	line-height: 1.2;
+	margin: 0;
+}
+
+.title-text {
+	color: black;
+}
+
+.title-text:hover {
+	color: blue;
+}
+
+.about_image {
+	display: contents;
+}
+
+.about_portrait {
+	grid-column: 1;
+	grid-row: 4;
+	justify-self: start;
+	align-self: end;
+	display: block;
+	width: auto;
+	height: 15em;
+	max-width: none;
+}
+
+.about_gallery {
+	grid-column: 3 / 5;
+	grid-row: 4;
+	align-self: end;
+
+	display: flex;
+	align-items: flex-start;
+	gap: 0.5em;
+	min-width: 0;
+	overflow-x: auto;
+	overflow-y: visible;
+	scroll-snap-type: x mandatory;
+	scrollbar-width: none;
+	-ms-overflow-style: none;
+	-webkit-overflow-scrolling: touch;
+}
+
+.about_gallery::-webkit-scrollbar {
+	display: none;
+}
+
+.about_gallery>a {
+	flex: 0 0 auto;
+}
+
+.about_gallery figure {
+	flex: 0 0 auto;
+	width: auto;
+	margin: 0;
+	scroll-snap-align: start;
+}
+
+.about_gallery figcaption {
+	margin: 0 0 0.25rem;
+	font-size: 1rem;
+	text-align: left;
+}
+
+.about_gallery figure img {
+	display: block;
+	width: auto;
+	height: 15em;
+	border: 1px dotted;
+	box-sizing: border-box;
+}
+
+/* ----------------------------------------------------------------------
+   Top-right information
+   ---------------------------------------------------------------------- */
+
+.rightAlign {
+	grid-column: 4;
+	grid-row: 1;
+	justify-self: end;
+	align-self: start;
+	width: 12em;
+	line-height: 1.2;
+	margin: 0;
+	z-index: 2;
+}
+
+.rightAlign p {
+	text-align: right;
+	margin: 0;
+}
+
+/* ----------------------------------------------------------------------
+   Main content / generated post navigation
+   ---------------------------------------------------------------------- */
+
+.content {
+	grid-column: 3;
+	grid-row: 1;
+	width: 100%;
+	max-width: 42em;
+	margin: 0;
+	padding: 0;
+	align-self: start;
+	z-index: 2;
+}
+
+/* Keep the generated index in the same central column. */
+.posts {
+	width: 100%;
+}
+
+/* ----------------------------------------------------------------------
+   Artist statement
+   ---------------------------------------------------------------------- */
+
+.artist-statement {
+	grid-column: 3 / -1;
+	grid-row: 3;
+	align-self: end;
+	max-width: calc(52em + 12em + 1rem);
+	padding: 1rem 0 1rem;
+	z-index: 2;
+}
+
+.artist-statement p {
+	margin: 0;
+}
+
+/* Other page components retained from the original stylesheet. */
+
+#book {
+	width: 100%;
+	margin: 2rem auto;
+}
+
+#book .page {
+	background: white;
+	overflow: hidden;
+}
+
+#book .page img {
+	display: block;
+	width: 100%;
+	height: 100%;
+	object-fit: contain;
+}
+
+.image-switcher {
+	width: 100%;
+}
+
+.image-switcher .hero-image {
+	display: block;
+	width: 100%;
+	height: auto;
+	cursor: default;
+}
+
+.image-thumbnails {
+	display: flex;
+	gap: 1em;
+	margin-top: 1em;
+	overflow-x: auto;
+	scrollbar-width: none;
+}
+
+.image-thumbnails::-webkit-scrollbar {
+	display: none;
+}
+
+.image-thumbnails img {
+	flex: 0 0 8em;
+	width: 8em;
+	height: auto;
+	cursor: pointer;
+}
+
+.wiki-embed {
+	display: block;
+	position: relative;
+	left: calc(21em - 33vw);
+	width: min(120vh, calc(100vw - 2rem));
+	height: 80vh;
+	margin: 2rem 0 0;
+	outline: 1px dotted;
+	outline-offset: 1em;
+}
+
+.mobile-gallery {
+	display: none;
+}
+
+/* ======================================================================
+   Mobile
+   ====================================================================== */
+
+@media (max-width: 760px) {
+
+	*,
+	*::before,
+	*::after {
+		box-sizing: border-box;
+	}
+
+	html,
+	body {
+		overflow-x: hidden;
+	}
+
+	body {
+		margin: 0.75rem;
+	}
+
+	.layout {
+		display: flex;
+		flex-direction: column;
+		min-height: auto;
+	}
+
+	/* Header/info first */
+	.rightAlign {
+		order: 1;
+		width: 100%;
+		margin: 0 0 1rem;
+	}
+
+	.rightAlign p {
+		text-align: left;
+	}
+
+	/* Title and image section */
+	.about {
+		order: 2;
+		display: flex;
+		flex-direction: column;
+		min-width: 0;
+	}
+
+	.about>a {
+		order: 1;
+	}
+
+	.title {
+		font-size: 1.2rem;
+	}
+
+	.about_image {
+		order: 2;
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		width: 100%;
+		min-width: 0;
+		margin-top: 1rem;
+	}
+
+	.about_portrait {
+		width: auto;
+		height: 10rem;
+		margin-bottom: 0.5rem;
+	}
+
+	.about_gallery {
+		width: 100%;
+		max-width: 100%;
+	}
+
+	.about_gallery figure img {
+		height: 11rem;
+	}
+
+	/* Main content */
+	.content {
+		order: 3;
+		width: 100%;
+		max-width: 100%;
+		margin: 0;
+		padding: 0 0 1rem;
+	}
+
+	/* Statement */
+	.artist-statement {
+		order: 4;
+		width: 100%;
+		max-width: 100%;
+		margin: 0 0 1rem;
+		padding: 0;
+	}
+
+	#book,
+	.image-switcher,
+	.wiki-embed {
+		width: 100%;
+		max-width: 100%;
+	}
+
+	.wiki-embed {
+		left: 0;
+		height: auto;
+		min-height: 50vh;
+		margin-top: 1rem;
+	}
+
+	.image-thumbnails img {
+		flex-basis: 6rem;
+		width: 6rem;
+	}
+
+}
+
+
+@media (max-width: 760px) {
+
+	*,
+	*::before,
+	*::after {
+		box-sizing: border-box;
+	}
+
+	html,
+	body {
+		overflow-x: hidden;
+	}
+
+	body {
+		margin: 0.75rem;
+	}
+
+	/*
+	   Mobile order:
+
+	   1. TITLE
+	   2. ARTIST STATEMENT
+	   3. NAVBAR / CONTENT
+	   4. GALLERY
+	   5. ABOUT / PORTRAIT
+
+	   The desktop wrappers are made transparent so their children can
+	   participate directly in the mobile flex order.
+	*/
+
+	.layout {
+		display: flex;
+		flex-direction: column;
+		min-height: auto;
+	}
+
+	/* Let the title, portrait and gallery become direct flex items. */
+	.about {
+		display: contents;
+	}
+
+	.about_image {
+		display: contents;
+	}
+
+	/* 1 — TITLE */
+	.about>a {
+		order: 1;
+		display: block;
+		width: 100%;
+	}
+
+	.title {
+		font-size: 1.2rem;
+	}
+
+	/* 2 — ARTIST STATEMENT */
+	.artist-statement {
+		order: 2;
+		width: 100%;
+		max-width: none;
+		margin: 1.5rem 0 0;
+		padding: 0;
+	}
+
+	/* 3 — NAVBAR / CONTENT */
+	.content {
+		order: 3;
+		width: 100%;
+		max-width: none;
+		margin: 1.5rem 0 0;
+		padding: 0 0 1rem;
+	}
+
+	/* Optional explanatory text remains after the main navigation. */
+	.rightAlign {
+		order: 6;
+		width: 100%;
+		margin: 1.5rem 0 0;
+	}
+
+	.rightAlign p {
+		text-align: left;
+	}
+
+	/* 4 — FULL-WIDTH VERTICAL GALLERY */
+	.about_gallery {
+		order: 4;
+		width: 100%;
+		max-width: none;
+		height: 70vh;
+		display: flex;
+		flex-direction: row;
+		gap: 0;
+		margin-top: 1.5rem;
+		overflow-x: hidden;
+		overflow-y: auto;
+		scroll-snap-type: y mandatory;
+		scroll-behavior: smooth;
+		scrollbar-width: none;
+		-ms-overflow-style: none;
+	}
+
+	.about_gallery::-webkit-scrollbar {
+		display: none;
+	}
+
+	.about_gallery>a {
+		flex: 0 0 100%;
+		width: 100%;
+		max-width: 100%;
+		scroll-snap-align: start;
+		scroll-snap-stop: always;
+	}
+
+	.about_gallery figure {
+		width: 100%;
+		height: 100%;
+		margin: 0;
+		display: flex;
+		flex-direction: column;
+	}
+
+	.about_gallery figcaption {
+		flex: 0 0 auto;
+		margin: 0 0 0.5rem;
+	}
+
+	.about_gallery figure img {
+		display: block;
+		width: 100%;
+		height: auto;
+		max-width: 100%;
+		border: 1px dotted;
+		object-fit: contain;
+		object-position: top left;
+	}
+
+	/* 5 — ABOUT / PORTRAIT */
+	.about_portrait {
+		order: 5;
+		width: auto;
+		height: 10rem;
+		max-width: none;
+		align-self: flex-start;
+		margin: 1.5rem 0 0;
+	}
+
+	#book,
+	.image-switcher,
+	.wiki-embed {
+		width: 100%;
+		max-width: 100%;
+	}
+
+	.wiki-embed {
+		left: 0;
+		height: auto;
+		min-height: 50vh;
+		margin-top: 1rem;
+	}
+
+	.image-thumbnails img {
+		flex-basis: 6rem;
+		width: 7.5rem;
+	}
+}
+
+
+/* Mobile: only title, artist statement, and navigation/content */
+@media (max-width: 760px) {
+
+	.about_portrait,
+	.about_image,
+	.about_gallery,
+	.rightAlign {
+		display: none !important;
+	}
+
+	.about {
+		display: contents;
+	}
+
+	.about>a {
+		display: block !important;
+		order: 1;
+		width: 100%;
+	}
+
+	.artist-statement {
+		order: 2;
+	}
+
+	.content {
+		order: 3;
+	}
+
+	.mobile-gallery {
+		display: block;
+		order: 4;
+	}
+
+}

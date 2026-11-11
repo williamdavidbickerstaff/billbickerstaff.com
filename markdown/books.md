@@ -1,0 +1,190 @@
+---
+title: books
+date: 18042002
+order: 3
+---
+
+***Books***
+
+<style>
+.book-selector {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+    margin: 1.5rem 0 2rem;
+}
+
+.book-thumb {
+    background: transparent;
+    border: none;
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+    text-align: left;
+    font: inherit;
+    color: inherit;
+}
+
+.book-thumb img {
+    display: block;
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border: 1px dotted;
+    box-sizing: border-box;
+}
+
+.book-thumb span {
+    display: block;
+    margin-top: 0.25rem;
+    color: #4e1e86;
+    text-decoration: underline;
+}
+
+.book-thumb.is-active img {
+    border: 1px solid #4e1e86;
+}
+
+.book-panel {
+    display: none;
+}
+
+.book-panel.is-active {
+    display: block;
+}
+
+.book-description {
+    margin: 0 0 1rem;
+    color: #111;
+    line-height: 1.5;
+}
+
+.book-description strong {
+    color: #4e1e86;
+}
+
+.book-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1rem;
+    align-items: start;
+}
+
+.book-grid img {
+    display: block;
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    padding: 1em;
+}
+</style>
+
+<div class="book-selector">
+<button class="book-thumb is-active" data-book="experiments" type="button">
+<img src="../images/bookmaking/experiments/experiments10.JPG" alt="Experiments">
+<span class="book-thumb-label">Experiments</span>
+</button>
+
+<button class="book-thumb" data-book="summers" type="button">
+<img src="../images/bookmaking/summers/summers1.JPG" alt="Summers">
+<span class="book-thumb-label">Summers</span>
+</button>
+
+<button class="book-thumb" data-book="publication" type="button">
+<img src="../images/bookmaking/publication/publication3.jpg" alt="Publication">
+<span class="book-thumb-label">Field</span>
+</button>
+</div>
+
+<div class="book-panel is-active" id="book-experiments">
+<div class="book-description">
+<p>Books bring together multiple strands of my practice. The combination of written and drawn elements, the opportunity to push form through sequencing and narrative, and the intimate act of handling that invites you to consider materials carefully, are all considered. My first book binding project explores layering and transparency, and how materials and techniques such as letterpress and embossing can be brought together. Found elements are also incorporated.</p>
+</div>
+<div class="book-grid">
+<img src="../images/bookmaking/experiments/experiments1.JPG" alt="Experiments 1">
+<img src="../images/bookmaking/experiments/experiments2.JPG" alt="Experiments 2">
+<img src="../images/bookmaking/experiments/experiments3.JPG" alt="Experiments 3">
+<img src="../images/bookmaking/experiments/experiments4.JPG" alt="Experiments 4">
+<img src="../images/bookmaking/experiments/experiments5.JPG" alt="Experiments 5">
+<img src="../images/bookmaking/experiments/experiments6.JPG" alt="Experiments 6">
+<img src="../images/bookmaking/experiments/experiments7.JPG" alt="Experiments 7">
+<img src="../images/bookmaking/experiments/experiments8.JPG" alt="Experiments 8">
+<img src="../images/bookmaking/experiments/experiments9.JPG" alt="Experiments 9">
+<img src="../images/bookmaking/experiments/experiments10.JPG" alt="Experiments 10">
+</div>
+</div>
+
+<div class="book-panel" id="book-summers">
+<div class="book-description">
+<p>‘Summers’ was my final piece at Antwerp, bringing together all of my intaglio work into one project. The pages are french folded, with content written, embossed or printed on the inside of the pages so they are viewable either by ripping the pages, or by the approximation of seeing the outside. The final piece is hand sewn with a stitched binding.</p>
+
+</div>
+<div class="book-grid">
+<img src="../images/bookmaking/summers/summers17.JPG" alt="Summers 17">
+<img src="../images/bookmaking/summers/summers1.JPG" alt="Summers 1">
+<img src="../images/bookmaking/summers/summers2.JPG" alt="Summers 2">
+<img src="../images/bookmaking/summers/summers3.JPG" alt="Summers 3">
+<img src="../images/bookmaking/summers/summers4.JPG" alt="Summers 4">
+<img src="../images/bookmaking/summers/summers5.JPG" alt="Summers 5">
+<img src="../images/bookmaking/summers/summers6.JPG" alt="Summers 6">
+<img src="../images/bookmaking/summers/summers7.JPG" alt="Summers 7">
+<img src="../images/bookmaking/summers/summers8.JPG" alt="Summers 8">
+<img src="../images/bookmaking/summers/summers9.JPG" alt="Summers 9">
+<img src="../images/bookmaking/summers/summers10.JPG" alt="Summers 10">
+<img src="../images/bookmaking/summers/summers11.JPG" alt="Summers 11">
+<img src="../images/bookmaking/summers/summers12.JPG" alt="Summers 12">
+<img src="../images/bookmaking/summers/summers13.JPG" alt="Summers 13">
+<img src="../images/bookmaking/summers/summers14.JPG" alt="Summers 14">
+<img src="../images/bookmaking/summers/summers15.JPG" alt="Summers 15">
+<img src="../images/bookmaking/summers/summers16.JPG" alt="Summers 16">
+</div>
+</div>
+
+<div class="book-panel" id="book-publication">
+<div class="book-description">
+<p>‘Field’ is my most recent book, made for my final show at Chelsea. In Gestalt therapy, the field is the total dynamic situation of an individual and their environment, meaning a person and their surroundings form a single, unified whole that cannot be separated. In the book, a form of self portrait, the content is not drawn or written by me, but instead by my family. In this way the book is an exploration of my field, with content from around me, but ultimately bound together and contextualised by me. The feel of the book was intentionally delicate, pages are unbound, held together by a piece of toilet paper I printed on..</p>
+</div>
+<div class="book-grid">
+<img src="../images/bookmaking/publication/publication1.jpg" alt="Publication 1">
+<img src="../images/bookmaking/publication/publication2.jpg" alt="Publication 2">
+<img src="../images/bookmaking/publication/publication3.jpg" alt="Publication 3">
+<img src="../images/bookmaking/publication/publication4.jpg" alt="Publication 4">
+<img src="../images/bookmaking/publication/publication5.jpg" alt="Publication 5">
+<img src="../images/bookmaking/publication/publication6.jpg" alt="Publication 6">
+<img src="../images/bookmaking/publication/publication7.jpg" alt="Publication 7">
+<img src="../images/bookmaking/publication/publication8.jpg" alt="Publication 8">
+<img src="../images/bookmaking/publication/publication9.jpg" alt="Publication 9">
+<img src="../images/bookmaking/publication/publication10.jpg" alt="Publication 10">
+<img src="../images/bookmaking/publication/publication11.jpg" alt="Publication 11">
+<img src="../images/bookmaking/publication/publication12.jpg" alt="Publication 12">
+<img src="../images/bookmaking/publication/publication13.jpg" alt="Publication 13">
+<img src="../images/bookmaking/publication/publication14.jpg" alt="Publication 14">
+<img src="../images/bookmaking/publication/publication16.jpg" alt="Publication 16">
+<img src="../images/bookmaking/publication/publication17.jpg" alt="Publication 17">
+<img src="../images/bookmaking/publication/publication18.jpg" alt="Publication 18">
+<img src="../images/bookmaking/publication/publication19.jpg" alt="Publication 19">
+</div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+const thumbs = document.querySelectorAll('.book-thumb');
+const panels = document.querySelectorAll('.book-panel');
+
+thumbs.forEach((thumb) => {
+thumb.addEventListener('click', () => {
+const book = thumb.dataset.book;
+const targetPanel = document.getElementById(`book-${book}`);
+const isOpen = targetPanel.classList.contains('is-active');
+
+panels.forEach((panel) => panel.classList.remove('is-active'));
+thumbs.forEach((button) => button.classList.remove('is-active'));
+
+if (!isOpen) {
+targetPanel.classList.add('is-active');
+thumb.classList.add('is-active');
+}
+});
+});
+});
+</script>
