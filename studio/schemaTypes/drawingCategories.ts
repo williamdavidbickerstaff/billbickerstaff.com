@@ -11,4 +11,5 @@ export const DRAWING_CATEGORIES = [
   {title: 'Animals', value: 'animals'},
   {title: 'Landscape', value: 'landscape'},
   {title: 'Buildings', value: 'buildings'},
+  {title: 'Boats', value: 'boats'},
 ] as const
