@@ -3,6 +3,8 @@ import { defineConfig, fontProviders } from "astro/config";
 
 import sanity from "@sanity/astro";
 
+import react from "@astrojs/react";
+
 // https://astro.build/config
 export default defineConfig({
   build: { format: "file" },
@@ -14,6 +16,7 @@ export default defineConfig({
       useCdn: false,
       studioBasePath: "/studio",
     }),
+    react(),
   ],
   fonts: [
     {

@@ -1,5 +1,5 @@
 {
-  "name": "YOUR-EXISTING-WORKER-NAME", // must match the Worker name in the dashboard exactly
+  "name": "billbickerstaff", // must match the Worker name in the dashboard exactly
   "compatibility_date": "2026-11-01",
   "assets": {
     "directory": "./dist",
