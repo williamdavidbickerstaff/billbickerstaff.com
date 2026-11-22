@@ -1,0 +1,63 @@
+---
+const links = [
+  { label: "drawings", href: "/drawings" },
+  { label: "contact", href: "/contact" },
+  { label: "cv", href: "/cv" },
+];
+
+// build.format is "file", so built pages can report "/drawings.html"
+const currentPath = Astro.url.pathname.replace(/(\.html|\/)$/, "");
+---
+
+<nav
+  id="navbar"
+  class="navbar fixed top-6 flex flex-row gap-6 z-1 transition-transform duration-500 ease-out data-hidden:-translate-y-[calc(100%+2rem)]"
+>
+  <a class="title font-title text-2xl w-fit text-nowrap self-baseline" href="/">
+    bill bickerstaff
+  </a>
+  {links.map((link) => (
+    <a
+      class="nav-option self-baseline"
+      href={link.href}
+      aria-current={currentPath === link.href ? "page" : undefined}
+    >
+      {link.label}
+    </a>
+  ))}
+</nav>
+
+<script>
+  // Hide the navbar when scrolling down, reveal it when scrolling up.
+  const navbar = document.getElementById("navbar");
+  const THRESHOLD = 30; // px of movement before toggling, avoids jitter
+  let lastY = window.scrollY;
+  let ticking = false;
+
+  function update() {
+    const y = window.scrollY;
+    const delta = y - lastY;
+
+    if (y <= 0) {
+      navbar?.removeAttribute("data-hidden"); // always show at the very top
+    } else if (delta > THRESHOLD) {
+      navbar?.setAttribute("data-hidden", "");
+    } else if (delta < -THRESHOLD) {
+      navbar?.removeAttribute("data-hidden");
+    }
+
+    if (Math.abs(delta) > THRESHOLD || y <= 0) lastY = y;
+    ticking = false;
+  }
+
+  window.addEventListener(
+    "scroll",
+    () => {
+      if (!ticking) {
+        requestAnimationFrame(update);
+        ticking = true;
+      }
+    },
+    { passive: true },
+  );
+</script>

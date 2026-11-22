@@ -1,0 +1,43 @@
+---
+// ./src/pages/post/[slug].astro
+import type { SanityDocument } from "@sanity/client";
+import { loadQuery } from "../../sanity/lib/load-query";
+import type { SanityImageSource } from "@sanity/image-url";
+import { urlForImage } from "../../sanity/lib/url-for-image";
+import Head from "../../components/head.astro";
+
+export async function getStaticPaths() {
+  const { data: posts } = await loadQuery<SanityDocument[]>({
+    query: `*[_type == "artwork"]`,
+  });
+
+  return posts.map(({ slug }) => {
+    return {
+      params: {
+        slug: slug.current,
+      },
+    };
+  });
+}
+
+const { params } = Astro;
+const { data: post } = await loadQuery<{
+  name: string;
+  description: string;
+  photo: SanityImageSource;
+}>({
+  query: `*[_type == "artwork" && slug.current == $slug][0]`,
+  params,
+});
+
+const postImage = post.photo ? urlForImage(post.photo).width(1200).url() : null;
+---
+
+<html lang="en">
+  <Head />
+
+  <body>
+    <p>{post.name}</p>
+    <img src={postImage} alt={post.name} />
+  </body>
+</html>

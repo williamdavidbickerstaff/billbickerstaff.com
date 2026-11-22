@@ -1,0 +1,45 @@
+---
+import Head from "../components/head.astro";
+import Navbar from "../components/navbar.astro";
+
+import { sanityClient } from "sanity:client";
+import { loadQuery } from "../sanity/lib/load-query";
+import type { SanityImageSource } from "@sanity/image-url";
+import { urlForImage } from "../sanity/lib/url-for-image";
+import { addTransitionType } from "react";
+import { url } from "astro:schema";
+
+type Drawing = {
+  _id: string;
+  photo: SanityImageSource | null;
+  catagory: string | null;
+};
+
+const DRAWINGS_QUERY = `
+  *[_type == "drawing"] {
+  _id,
+  photo,
+  catagory
+  }
+`;
+
+const { data: drawings } = await loadQuery<Drawing[]>({
+  query: DRAWINGS_QUERY,
+});
+
+const drawingList = drawings.map((drawing) => ({
+  id: drawing._id,
+  imageUrl: drawing.photo
+    ? urlForImage(drawing.photo).width(1200).auto("format").url()
+    : null,
+  catagory: drawing.catagory,
+}));
+---
+
+<Head />
+
+<body class="m-0">
+  <div class="layout min-w-dvh min-h-dvh p-6">
+    <Navbar />
+  </div>
+</body>

@@ -1,0 +1,39 @@
+---
+import Head from "../components/head.astro";
+import Navbar from "../components/navbar.astro";
+import billImage from "../images/bill.jpg";
+---
+
+<Head />
+
+<body class="m-0 overflow-hidden">
+  <div class="layout relative w-dvw h-dvh p-6 overflow-hidden">
+    <Navbar />
+
+    <img id="billImage" class="absolute top-0 left-0 max-w-38" src={billImage.src} />
+    <p id="txt" class="absolute top-0 left-0 m-0 whitespace-nowrap">
+      bill@billbickerstaff.com
+    </p>
+  </div>
+</body>
+
+<script>
+  const img = document.getElementById("billImage");
+  const txt = document.getElementById("txt");
+
+  // Place an element at a random spot fully inside the viewport.
+  function placeRandomly(el: HTMLElement | null) {
+    if (!el) return;
+    const maxX = Math.max(0, window.innerWidth - el.offsetWidth);
+    const maxY = Math.max(0, window.innerHeight - el.offsetHeight);
+    const x = Math.floor(Math.random() * (maxX + 1));
+    const y = Math.floor(Math.random() * (maxY + 1));
+    el.style.transform = `translate(${x}px, ${y}px)`;
+  }
+
+  // onload so the image has its real dimensions before we measure it
+  window.addEventListener("load", () => {
+    placeRandomly(img);
+    placeRandomly(txt);
+  });
+</script>

@@ -1,0 +1,128 @@
+---
+import Head from "../components/head.astro";
+import Navbar from "../components/navbar.astro";
+import billImage from "../images/bill.jpg";
+import { sanityClient } from "sanity:client";
+import { loadQuery } from "../sanity/lib/load-query";
+import type { SanityImageSource } from "@sanity/image-url";
+import { urlForImage } from "../sanity/lib/url-for-image";
+
+type Artwork = {
+  _id: string;
+  slug: string | null;
+  name: string | null;
+  media: string | null;
+  dimensions: string | null;
+  description: string | null;
+  date: string | null;
+  photo: SanityImageSource | null;
+  alt: string | null;
+  width: number | null;
+  height: number | null;
+};
+
+const ARTWORKS_QUERY = `
+  *[_type == "artwork" && defined(slug.current)] | order(date desc) {
+    _id,
+    "slug": slug.current,
+    name,
+    media,
+    dimensions,
+    description,
+    date,
+    photo,
+    "alt": coalesce(photo.alt, name),
+    "width": photo.asset->metadata.dimensions.width,
+    "height": photo.asset->metadata.dimensions.height
+  }
+`;
+
+const { data: artworks } = await loadQuery<Artwork[]>({
+  query: ARTWORKS_QUERY,
+});
+
+const artworkList = artworks.map((art) => ({
+  id: art._id,
+  href: `work/${art.slug}`,
+  name: art.name ?? "Untitled",
+  media: art.media ?? "",
+  dimensions: art.dimensions ?? "",
+  description: art.description ?? "",
+  year: art.date ? new Date(art.date).getFullYear() : null,
+  imageUrl: art.photo
+    ? urlForImage(art.photo).width(1200).auto("format").url()
+    : null,
+  alt: art.alt ?? "",
+  width: art.width,
+  height: art.height,
+  orientation:
+    art.width && art.height
+      ? art.width > art.height
+        ? ("landscape" as const)
+        : art.width < art.height
+          ? ("portrait" as const)
+          : ("square" as const)
+      : ("portrait" as const),
+}));
+
+// Size rules per orientation — tweak these to taste.
+const sizeClasses = {
+  landscape: "w-3xl", // fixed width (48rem), height follows
+  portrait: "w-auto max-h-[70vh]", // capped height, width follows
+  square: "w-lg", // fixed width (32rem)
+};
+---
+
+<Head />
+
+<body class="m-0">
+  <div class="layout min-w-dvh min-h-dvh p-6">
+    <Navbar />
+
+    <div class="flex flex-col gap-24 pt-16 pb-64">
+      <p class="max-w-5xl">
+        I am an artist living and working in Cambridge, producing work that
+        explores ideas around story and legend through a multidisciplinary
+        practice including printmaking, drawing and sculpture, but also writing
+        and digital mediums. My mark-making and intaglio work comes from a
+        sketching practice with imagery always drawn from imagination, capturing
+        the ideographic with essential, elemental forms. Digital projects are
+        wide ranging with recent work exploring atypical forms such as game
+        modding and creative ricing. Sometimes the work is less focused on
+        itself as a visual medium, but instead on writing to explore ideas of
+        communities and personas, obfuscation and shattered forms.
+      </p>
+      <div class="artworks flex flex-col gap-38">
+        {artworkList.map((art) => (
+          <a href={art.href} class="">
+            <div class="artwork grid grid-cols-[1fr_auto_1fr] items-center gap-6">
+              <div class="justify-self-start self-start flex flex-row gap-2">
+                {/* here goes the caption */}
+                <p class="uppercase text-xs min-w-24 max-w-24">{art.name}</p>
+                <div class="caption-right leading-tight text-sm border-l pl-2">
+                  <p>{art.year}</p>
+                  <p>{art.media}</p>
+                  <p>{art.dimensions}</p>
+                </div>
+              </div>
+              {art.imageUrl && (
+                <img
+                  src={art.imageUrl}
+                  alt={art.alt}
+                  width={art.width ?? undefined}
+                  height={art.height ?? undefined}
+                  loading="lazy"
+                  class:list={[
+                    "block max-w-full h-auto object-contain brightness-95",
+                    sizeClasses[art.orientation],
+                  ]}
+                />
+              )}
+              <div></div>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </div>
+</body>

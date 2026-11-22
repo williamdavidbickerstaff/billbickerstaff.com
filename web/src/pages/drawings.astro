@@ -1,0 +1,87 @@
+---
+import Head from "../components/head.astro";
+import Navbar from "../components/navbar.astro";
+
+import { loadQuery } from "../sanity/lib/load-query";
+import type { SanityImageSource } from "@sanity/image-url";
+import { urlForImage } from "../sanity/lib/url-for-image";
+// Shared with the Studio schema — add categories there and they show up here.
+import { DRAWING_CATEGORIES } from "../../../studio/schemaTypes/drawingCategories";
+
+type Drawing = {
+  _id: string;
+  photo: SanityImageSource | null;
+  catagory: string | null;
+  width: number | null;
+  height: number | null;
+};
+
+const DRAWINGS_QUERY = `
+  *[_type == "drawing" && defined(photo.asset) && defined(catagory)]
+    | order(_createdAt asc) {
+    _id,
+    photo,
+    catagory,
+    "width": photo.asset->metadata.dimensions.width,
+    "height": photo.asset->metadata.dimensions.height
+  }
+`;
+
+const { data: drawings } = await loadQuery<Drawing[]>({
+  query: DRAWINGS_QUERY,
+});
+
+// Rendered height of each thumbnail (px). Images are requested at 2x for sharpness.
+const THUMB_HEIGHT = 272;
+
+// One section per category in the schema, in schema order,
+// skipping any category that has no drawings yet.
+const sections = DRAWING_CATEGORIES.map((category) => ({
+  title: category.title,
+  drawings: drawings
+    .filter((drawing) => drawing.catagory === category.value)
+    .map((drawing) => ({
+      id: drawing._id,
+      imageUrl: urlForImage(drawing.photo!)
+        .height(THUMB_HEIGHT * 2)
+        .auto("format")
+        .url(),
+      fullUrl: urlForImage(drawing.photo!).width(2400).auto("format").url(),
+      width:
+        drawing.width && drawing.height
+          ? Math.round((drawing.width / drawing.height) * THUMB_HEIGHT)
+          : undefined,
+    })),
+})).filter((section) => section.drawings.length > 0);
+---
+
+<Head />
+
+<body class="m-0">
+  <div class="layout min-w-dvh min-h-dvh p-6">
+    <Navbar />
+    <div class="flex flex-col gap-10 pt-16 pb-64">
+      {sections.map((section) => (
+        <section>
+          <h2 class="text-sm font-normal m-0 mb-2 border-b border-black">
+            {section.title}
+          </h2>
+          <div class="flex flex-row flex-wrap gap-3">
+            {section.drawings.map((drawing) => (
+              <a href={drawing.fullUrl} class="block border border-dotted border-black">
+                <img
+                  src={drawing.imageUrl}
+                  alt={section.title}
+                  width={drawing.width}
+                  height={THUMB_HEIGHT}
+                  loading="lazy"
+                  class="block h-68 w-auto max-w-full object-contain"
+                />
+              </a>
+            ))}
+          </div>
+        </section>
+      ))}
+    </div>
+  </div>
+</body>
